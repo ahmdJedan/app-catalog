@@ -14,7 +14,6 @@ export default function ApplicationCard({ application }) {
 
   return (
     <article className={styles.card}>
-      <div className={styles.id}>{id}</div>
 
       <h3 className={styles.name}>{app_name || "Untitled application"}</h3>
 
@@ -23,7 +22,6 @@ export default function ApplicationCard({ application }) {
       </p>
 
       <div className={styles.tags}>
-        <StatusBadge status={status} />
         {department ? (
           <span className={styles.department}>{department}</span>
         ) : null}
