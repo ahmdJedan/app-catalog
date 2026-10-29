@@ -69,13 +69,11 @@ export default async function ApplicationDetailPage({ params }) {
         <aside className={styles.leftPanel}>
           <div className={styles.appHeader}>
             <h1 className={styles.appName}>{app_name || "Untitled application"}</h1>
-            <div className={styles.appMeta}>
-              <span className={styles.appId}>{id}</span>
-              {department ? (
-                <span className={styles.metaDivider}>&middot;</span>
-              ) : null}
-              {department ? <span>{department}</span> : null}
-            </div>
+            {department ? (
+              <div className={styles.appMeta}>
+                <span>{department}</span>
+              </div>
+            ) : null}
             <div className={styles.badges}>
               <StatusBadge status={status} />
             </div>

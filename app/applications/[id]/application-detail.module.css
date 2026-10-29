@@ -40,20 +40,10 @@
 }
 
 .appMeta {
-  display: flex;
-  align-items: center;
-  gap: 8px;
   margin-top: 6px;
-  font-size: 13px;
+  font-size: 13.5px;
+  line-height: 1.5;
   color: var(--color-text-secondary);
-}
-
-.appId {
-  font-family: var(--font-mono);
-}
-
-.metaDivider {
-  color: var(--color-text-muted);
 }
 
 .badges {
