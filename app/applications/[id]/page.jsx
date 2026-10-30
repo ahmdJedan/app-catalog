@@ -2,9 +2,6 @@ import Link from "next/link";
 import { getApplicationById } from "@/lib/applications";
 import Breadcrumb from "@/app/components/Breadcrumb";
 import StatusBadge from "@/app/components/StatusBadge";
-import ProductOwner from "@/app/components/ProductOwner";
-import EmployeeList from "@/app/components/EmployeeList";
-import ModuleList from "@/app/components/ModuleList";
 import DiagramViewer from "@/app/components/DiagramViewer";
 import styles from "./application-detail.module.css";
 
@@ -55,11 +52,18 @@ export default async function ApplicationDetailPage({ params }) {
     status,
     department,
     owner_unit,
+    po_number,
     product_owner,
-    assigned_employees,
-    modules,
+    programmer_groups,
     diagram,
   } = application;
+
+  const productOwnerDisplay =
+    owner_unit ||
+    (typeof product_owner === "string"
+      ? product_owner
+      : product_owner?.name) ||
+    "Product owner not available.";
 
   return (
     <main className={styles.page}>
@@ -69,25 +73,71 @@ export default async function ApplicationDetailPage({ params }) {
         <aside className={styles.leftPanel}>
           <div className={styles.appHeader}>
             <h1 className={styles.appName}>{app_name || "Untitled application"}</h1>
-            {department ? (
-              <div className={styles.appMeta}>
-                <span>{department}</span>
-              </div>
-            ) : null}
-            <div className={styles.badges}>
-              <StatusBadge status={status} />
-            </div>
             <p className={styles.description}>
               {description || "Description not available."}
             </p>
-            {owner_unit ? (
-              <p className={styles.ownerUnit}>{owner_unit}</p>
-            ) : null}
+
+            <div className={styles.badges}>
+              <StatusBadge status={status} />
+            </div>
+
+            <div className={styles.poAndDepartment}>
+              {po_number ? (
+                <p className={styles.poNumber}>{po_number}</p>
+              ) : null}
+              {department ? (
+                <p className={styles.departmentText}>{department}</p>
+              ) : null}
+            </div>
           </div>
 
-          <ProductOwner productOwner={product_owner} />
-          <EmployeeList employees={assigned_employees} />
-          <ModuleList modules={modules} />
+          <div className={styles.productOwnerSection}>
+            <h2 className={styles.sectionHeading}>Product Owner</h2>
+            <p className={styles.productOwnerValue}>{productOwnerDisplay}</p>
+          </div>
+
+          <div className={styles.programmersSection}>
+            {programmer_groups && programmer_groups.length > 0 ? (
+              <div className={styles.programmerGroupsList}>
+                {programmer_groups.map((group, groupIdx) => (
+                  <div key={groupIdx} className={styles.programmerGroup}>
+                    {group.programmers && group.programmers.length > 0 ? (
+                      group.programmers.map((prog, pIdx) => (
+                        <div key={pIdx} className={styles.programmerItem}>
+                          <p className={styles.programmerName}>
+                            {prog.name || "Programmer"}
+                          </p>
+                          <p className={styles.programmerRole}>
+                            {prog.position || "Programmer"}
+                          </p>
+                        </div>
+                      ))
+                    ) : (
+                      <div className={styles.programmerItem}>
+                        <p className={styles.programmerName}>Unassigned</p>
+                        <p className={styles.programmerRole}>Programmer</p>
+                      </div>
+                    )}
+
+                    {group.modules && group.modules.length > 0 ? (
+                      <div className={styles.modulesBlock}>
+                        <span className={styles.modulesHeading}>Modules</span>
+                        <ul className={styles.modulesBulletList}>
+                          {group.modules.map((mod, mIdx) => (
+                            <li key={mIdx} className={styles.moduleBulletItem}>
+                              {mod}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    ) : null}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <p className={styles.placeholder}>No programmers assigned yet.</p>
+            )}
+          </div>
         </aside>
 
         <section className={styles.rightPanel}>
