@@ -8,7 +8,8 @@ import styles from "./application-detail.module.css";
 export const dynamic = "force-dynamic";
 
 export default async function ApplicationDetailPage({ params }) {
-  const { id: rawId } = await params;
+  const resolvedParams = typeof params?.then === "function" ? await params : params;
+  const rawId = resolvedParams?.id;
   let application = null;
   let loadError = null;
 
@@ -24,7 +25,7 @@ export default async function ApplicationDetailPage({ params }) {
       <main className={styles.page}>
         <div className={styles.stateBox}>
           <p className={styles.stateTitle}>{loadError}</p>
-          <Link href="/" className={styles.stateLink}>
+          <Link href="/catalog" className={styles.stateLink}>
             &larr; Back to catalog
           </Link>
         </div>
@@ -37,7 +38,7 @@ export default async function ApplicationDetailPage({ params }) {
       <main className={styles.page}>
         <div className={styles.stateBox}>
           <p className={styles.stateTitle}>Application not found.</p>
-          <Link href="/" className={styles.stateLink}>
+          <Link href="/catalog" className={styles.stateLink}>
             &larr; Back to catalog
           </Link>
         </div>

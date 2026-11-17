@@ -38,8 +38,11 @@ CREATE TABLE IF NOT EXISTS applications (
   owner_unit_id   INTEGER REFERENCES owner_units(id) ON DELETE SET NULL,
   po_number       TEXT,
   diagram         TEXT,
-  created_at      TIMESTAMPTZ DEFAULT now()
+  created_at      TIMESTAMPTZ DEFAULT now(),
+  deleted_at      TIMESTAMPTZ DEFAULT NULL
 );
+
+CREATE INDEX IF NOT EXISTS idx_applications_deleted_at ON applications (deleted_at);
 
 -- Junction / detail tables
 CREATE TABLE IF NOT EXISTS modules (

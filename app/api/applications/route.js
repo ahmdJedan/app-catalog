@@ -1,21 +1,16 @@
 import { NextResponse } from "next/server";
-import { getApplicationById } from "@/lib/applications";
+import { getAllApplications } from "@/lib/applications";
 
-export async function GET(request, { params }) {
-  const { id } = await params;
+export const dynamic = "force-dynamic";
+
+export async function GET() {
   try {
-    const data = await getApplicationById(id);
-    if (!data) {
-      return NextResponse.json(
-        { error: "Application not found." },
-        { status: 404 }
-      );
-    }
+    const data = await getAllApplications();
     return NextResponse.json({ data });
   } catch (error) {
-    console.error(`[GET /api/applications/${id}]`, error);
+    console.error("[GET /api/applications]", error);
     return NextResponse.json(
-      { error: "Unable to load application." },
+      { error: "Unable to load applications." },
       { status: 500 }
     );
   }

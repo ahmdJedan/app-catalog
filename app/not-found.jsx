@@ -6,7 +6,7 @@ export default function NotFound() {
     <main className={styles.page}>
       <div className={styles.stateBox}>
         <p className={styles.stateTitle}>Page not found.</p>
-        <Link href="/" className={styles.stateLink}>
+        <Link href="/catalog" className={styles.stateLink}>
           &larr; Back to catalog
         </Link>
       </div>
