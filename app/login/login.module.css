@@ -1,60 +1,100 @@
-.loginContainer {
+.loginPage {
   min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+}
+
+.loginMain {
+  flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
-  background: var(--color-bg);
+  padding: 48px 24px;
 }
 
 .loginCard {
   width: 100%;
-  max-width: 420px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md);
-  box-shadow: 0 4px 16px rgba(20, 24, 28, 0.08);
-  padding: 36px 32px;
+  max-width: 440px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px -4px rgba(15, 41, 74, 0.08);
+  padding: 38px 36px 32px;
 }
 
 .cardHeader {
-  text-align: center;
-  margin-bottom: 28px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.logosRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.undipLogo {
+  height: 38px;
+  width: auto;
+  object-fit: contain;
+}
+
+.divider {
+  width: 1px;
+  height: 26px;
+  background: #cbd5e1;
+}
+
+.dstiLogo {
+  height: 28px;
+  width: auto;
+  object-fit: contain;
 }
 
 .badge {
   display: inline-block;
-  font-size: 11.5px;
-  font-weight: 600;
+  font-size: 10.5px;
+  font-weight: 700;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
-  padding: 3px 10px;
-  background: var(--color-accent-soft);
-  color: var(--color-accent);
+  letter-spacing: 0.8px;
+  padding: 4px 12px;
+  background: #eff6ff;
+  color: #1d4ed8;
+  border: 1px solid #dbeafe;
   border-radius: 999px;
   margin-bottom: 12px;
 }
 
 .title {
-  font-size: 22px;
+  font-size: 23px;
   font-weight: 700;
-  color: var(--color-text-primary);
+  color: #000000;
+  text-align: center;
   margin: 0 0 6px;
+  letter-spacing: -0.4px;
 }
 
 .subtitle {
   font-size: 13.5px;
-  color: var(--color-text-secondary);
+  color: #64748b;
+  text-align: center;
   margin: 0;
+  line-height: 1.5;
+  max-width: 320px;
 }
 
 .errorAlert {
-  background: var(--color-status-retiring-bg);
-  border: 1px solid #f5c2c2;
-  color: var(--color-status-retiring-text);
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #b91c1c;
   padding: 10px 14px;
-  border-radius: var(--radius-sm);
-  font-size: 13.5px;
+  border-radius: 8px;
+  font-size: 13px;
   margin-bottom: 20px;
   display: flex;
   align-items: center;
@@ -76,34 +116,39 @@
 .label {
   font-size: 13.5px;
   font-weight: 600;
-  color: var(--color-text-primary);
+  color: #1e293b;
 }
 
 .input {
   width: 100%;
-  padding: 10px 12px;
-  font-size: 14.5px;
+  height: 44px;
+  padding: 0 14px;
+  font-size: 14px;
   font-family: var(--font-sans);
-  background: var(--color-surface);
-  border: 1px solid var(--color-border-strong);
-  border-radius: var(--radius-sm);
-  color: var(--color-text-primary);
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  color: #0f172a;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.input::placeholder {
+  color: #94a3b8;
 }
 
 .input:focus {
   outline: none;
-  border-color: var(--color-accent);
-  box-shadow: 0 0 0 3px rgba(42, 92, 138, 0.15);
+  border-color: #1d4ed8;
+  box-shadow: 0 0 0 3px rgba(29, 78, 216, 0.12);
 }
 
 .submitBtn {
   width: 100%;
-  padding: 11px;
-  background: var(--color-accent);
+  height: 46px;
+  background: #0f294a;
   color: #ffffff;
   border: none;
-  border-radius: var(--radius-sm);
+  border-radius: 8px;
   font-size: 14.5px;
   font-weight: 600;
   cursor: pointer;
@@ -112,27 +157,40 @@
 }
 
 .submitBtn:hover:not(:disabled) {
-  background: var(--color-accent-hover);
+  background: #18365d;
 }
 
 .submitBtn:disabled {
-  opacity: 0.65;
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
-.footerNotes {
-  margin-top: 24px;
+.backLinkWrapper {
   text-align: center;
-  font-size: 12.5px;
-  color: var(--color-text-muted);
+  margin-top: 24px;
 }
 
 .backLink {
-  color: var(--color-text-secondary);
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  font-size: 13px;
+  color: #475569;
+  text-decoration: none;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.15s ease;
 }
 
 .backLink:hover {
-  color: var(--color-accent);
+  color: #0f294a;
+  text-decoration: underline;
+}
+
+@media (max-width: 480px) {
+  .loginCard {
+    padding: 28px 20px 24px;
+  }
+  .loginMain {
+    padding: 32px 16px;
+  }
 }

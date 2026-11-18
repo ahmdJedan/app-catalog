@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import DstiFooter from "../components/DstiFooter";
 import styles from "./login.module.css";
 
 export default function LoginPage() {
@@ -43,74 +44,92 @@ export default function LoginPage() {
   };
 
   return (
-    <div className={styles.loginContainer}>
-      <div className={styles.loginCard}>
-        <div className={styles.cardHeader}>
-          <span className={styles.badge}>Akses Khusus</span>
-          <h1 className={styles.title}>Admin Authentication</h1>
-          <p className={styles.subtitle}>
-            Masuk untuk mengelola data katalog aplikasi internal.
-          </p>
-        </div>
+    <div className={styles.loginPage}>
+      <main className={styles.loginMain}>
+        <div className={styles.loginCard}>
+          <div className={styles.cardHeader}>
+            <div className={styles.logosRow}>
+              <img
+                src="/images/undip-logo.png"
+                alt="Lambang Universitas Diponegoro"
+                className={styles.undipLogo}
+              />
+              <span className={styles.divider} aria-hidden="true" />
+              <img
+                src="/images/dsti-logo.png"
+                alt="Logo DSTI UNDIP"
+                className={styles.dstiLogo}
+              />
+            </div>
 
-        {errorMsg ? (
-          <div className={styles.errorAlert} role="alert">
-            <span aria-hidden="true">&#9888;</span>
-            <span>{errorMsg}</span>
+            <span className={styles.badge}>Akses Khusus DSTI</span>
+            <h1 className={styles.title}>Admin Authentication</h1>
+            <p className={styles.subtitle}>
+              Masuk untuk mengelola data katalog aplikasi internal DSTI UNDIP.
+            </p>
           </div>
-        ) : null}
 
-        <form onSubmit={handleSubmit} className={styles.form}>
-          <div className={styles.formGroup}>
-            <label htmlFor="username" className={styles.label}>
-              Username Admin
-            </label>
-            <input
-              id="username"
-              type="text"
-              required
-              autoFocus
-              autoComplete="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className={styles.input}
-              placeholder="Masukkan username"
+          {errorMsg ? (
+            <div className={styles.errorAlert} role="alert">
+              <span aria-hidden="true">&#9888;</span>
+              <span>{errorMsg}</span>
+            </div>
+          ) : null}
+
+          <form onSubmit={handleSubmit} className={styles.form}>
+            <div className={styles.formGroup}>
+              <label htmlFor="username" className={styles.label}>
+                Username Admin
+              </label>
+              <input
+                id="username"
+                type="text"
+                required
+                autoFocus
+                autoComplete="username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className={styles.input}
+                placeholder="Masukkan username"
+                disabled={isLoading}
+              />
+            </div>
+
+            <div className={styles.formGroup}>
+              <label htmlFor="password" className={styles.label}>
+                Password
+              </label>
+              <input
+                id="password"
+                type="password"
+                required
+                autoComplete="current-password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className={styles.input}
+                placeholder="Masukkan password"
+                disabled={isLoading}
+              />
+            </div>
+
+            <button
+              type="submit"
+              className={styles.submitBtn}
               disabled={isLoading}
-            />
+            >
+              {isLoading ? "Memverifikasi..." : "Masuk ke Panel Admin"}
+            </button>
+          </form>
+
+          <div className={styles.backLinkWrapper}>
+            <Link href="/" className={styles.backLink}>
+              <span aria-hidden="true">&larr;</span> Kembali ke Beranda
+            </Link>
           </div>
-
-          <div className={styles.formGroup}>
-            <label htmlFor="password" className={styles.label}>
-              Password
-            </label>
-            <input
-              id="password"
-              type="password"
-              required
-              autoComplete="current-password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className={styles.input}
-              placeholder="Masukkan password"
-              disabled={isLoading}
-            />
-          </div>
-
-          <button
-            type="submit"
-            className={styles.submitBtn}
-            disabled={isLoading}
-          >
-            {isLoading ? "Memverifikasi..." : "Masuk ke Panel Admin"}
-          </button>
-        </form>
-
-        <div className={styles.footerNotes}>
-          <Link href="/" className={styles.backLink}>
-            &larr; Kembali ke Beranda
-          </Link>
         </div>
-      </div>
+      </main>
+
+      <DstiFooter />
     </div>
   );
 }

@@ -1,37 +1,41 @@
-@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
 
 :root {
-  /* Color */
-  --color-bg: #f4f5f3;
+  /* Color - DSTI Theme */
+  --color-bg: #ffffff;
   --color-surface: #ffffff;
-  --color-border: #dfe1df;
-  --color-border-strong: #c3c7c4;
-  --color-text-primary: #1b2430;
-  --color-text-secondary: #5c6672;
-  --color-text-muted: #8a929b;
-  --color-accent: #2a5c8a;
-  --color-accent-hover: #1e4666;
-  --color-accent-soft: #e9f1f8;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #475569;
+  --color-text-muted: #64748b;
+  --color-text-subtle: #94a3b8;
+  --color-navy: #0f294a;
+  --color-accent: #1d4ed8;
+  --color-accent-hover: #1e40af;
+  --color-accent-soft: #eff6ff;
+  --color-accent-border: #bfdbfe;
 
-  --color-status-available-bg: #e5f3ea;
-  --color-status-available-text: #1f7a3d;
+  --color-status-available-bg: #eff6ff;
+  --color-status-available-text: #1d4ed8;
   --color-status-request-bg: #fdf3e2;
   --color-status-request-text: #9a6a12;
   --color-status-retiring-bg: #fbe9e9;
   --color-status-retiring-text: #b23b3b;
   --color-status-pilot-bg: #eaeefa;
   --color-status-pilot-text: #3d4fa8;
-  --color-status-default-bg: #eef0f1;
-  --color-status-default-text: #5c6672;
+  --color-status-default-bg: #f1f5f9;
+  --color-status-default-text: #475569;
 
   /* Type */
-  --font-sans: "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-sans: "Inter", "IBM Plex Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", "SFMono-Regular", Consolas, monospace;
 
   /* Radius / shadow */
   --radius-sm: 4px;
-  --radius-md: 6px;
-  --shadow-card: 0 1px 2px rgba(20, 24, 28, 0.05);
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-card: 0 2px 6px rgba(15, 41, 74, 0.04);
 }
 
 * {
