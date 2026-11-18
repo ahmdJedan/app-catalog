@@ -26,7 +26,7 @@ export default async function EditApplicationPage({ params }) {
         <h2>Aplikasi Tidak Ditemukan</h2>
         <p>Aplikasi dengan ID &quot;{id}&quot; tidak ditemukan dalam database.</p>
         <Link href="/admin" className={styles.btnSecondary} style={{ marginTop: "16px" }}>
-          &larr; Kembali ke Dashboard
+          <span aria-hidden="true">&larr;</span> Kembali ke Dashboard
         </Link>
       </div>
     );
@@ -36,11 +36,13 @@ export default async function EditApplicationPage({ params }) {
     <>
       <div className={styles.pageTop}>
         <div className={styles.titleArea}>
-          <h1>Edit Aplikasi: {application.app_name || application.id}</h1>
-          <p>Perbarui informasi sistem, modul, maupun penugasan personil.</p>
+          <h1 className={styles.pageTitle}>Edit Aplikasi: {application.app_name || application.id}</h1>
+          <p className={styles.pageSubtitle}>
+            Perbarui data sistem, tautan akses publik, dan modul pengembang di database internal DSTI UNDIP.
+          </p>
         </div>
         <Link href="/admin" className={styles.btnSecondary}>
-          &larr; Kembali ke Daftar
+          <span aria-hidden="true">&larr;</span> Kembali ke Daftar
         </Link>
       </div>
 

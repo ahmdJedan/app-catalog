@@ -1,40 +1,33 @@
-import Link from "next/link";
+import { getArchivedApplications } from "@/lib/applications";
+import AdminHeader from "./components/AdminHeader";
+import DstiFooter from "../components/DstiFooter";
 import styles from "./admin.module.css";
+
+export const dynamic = "force-dynamic";
 
 export const metadata = {
   title: "Admin Panel - Application Catalog",
-  description: "Panel pengelolaan dan CRUD katalog aplikasi internal.",
+  description: "Panel pengelolaan dan CRUD katalog aplikasi internal DSTI UNDIP.",
 };
 
-export default function AdminLayout({ children }) {
+export default async function AdminLayout({ children }) {
+  let trashCount = 0;
+  try {
+    const archived = await getArchivedApplications();
+    trashCount = archived.length;
+  } catch (error) {
+    console.error("[AdminLayout] Gagal memuat data arsip:", error);
+  }
+
   return (
-    <div className={styles.adminContainer}>
-      <header className={styles.headerNav}>
-        <div className={styles.brand}>
-          <h2 className={styles.brandTitle}>Application Catalog</h2>
-          <span className={styles.adminBadge}>Admin Panel</span>
-        </div>
+    <div className={styles.adminPageWrapper}>
+      <AdminHeader trashCount={trashCount} />
 
-        <nav className={styles.navLinks}>
-          <Link href="/admin" className={styles.navLink}>
-            Aplikasi Aktif
-          </Link>
-          <Link href="/admin/trash" className={styles.navLink}>
-            Tempat Sampah (Trash)
-          </Link>
-          <span className={styles.navDivider} aria-hidden="true" />
-          <Link href="/catalog" className={styles.navLink} target="_blank">
-            Lihat Katalog Publik &rarr;
-          </Link>
-          <form action="/api/auth/logout" method="POST">
-            <button type="submit" className={styles.logoutBtn}>
-              Logout
-            </button>
-          </form>
-        </nav>
-      </header>
+      <main className={styles.adminMainContent}>
+        {children}
+      </main>
 
-      {children}
+      <DstiFooter />
     </div>
   );
 }

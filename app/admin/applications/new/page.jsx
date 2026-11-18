@@ -11,11 +11,13 @@ export default function NewApplicationPage() {
     <>
       <div className={styles.pageTop}>
         <div className={styles.titleArea}>
-          <h1>Tambah Aplikasi Baru</h1>
-          <p>Daftarkan sistem aplikasi baru ke dalam database katalog internal.</p>
+          <h1 className={styles.pageTitle}>Tambah Aplikasi Baru</h1>
+          <p className={styles.pageSubtitle}>
+            Daftarkan sistem aplikasi baru ke dalam database katalog internal DSTI UNDIP.
+          </p>
         </div>
         <Link href="/admin" className={styles.btnSecondary}>
-          &larr; Kembali ke Daftar
+          <span aria-hidden="true">&larr;</span> Kembali ke Daftar
         </Link>
       </div>
 

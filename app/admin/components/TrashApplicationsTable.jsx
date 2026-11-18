@@ -4,7 +4,6 @@ import { useState, useMemo } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import styles from "../admin.module.css";
-import StatusBadge from "@/app/components/StatusBadge";
 
 export default function TrashApplicationsTable({ archivedApplications = [] }) {
   const router = useRouter();
@@ -20,9 +19,26 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
       (app) =>
         (app.app_name || "").toLowerCase().includes(term) ||
         (app.id || "").toLowerCase().includes(term) ||
+        (app.app_id || "").toLowerCase().includes(term) ||
         (app.department || "").toLowerCase().includes(term)
     );
   }, [archivedApplications, search]);
+
+  const formatDate = (dateStr) => {
+    if (!dateStr) return "-";
+    try {
+      const d = new Date(dateStr);
+      return d.toLocaleDateString("id-ID", {
+        day: "numeric",
+        month: "short",
+        year: "numeric",
+        hour: "2-digit",
+        minute: "2-digit",
+      });
+    } catch {
+      return dateStr;
+    }
+  };
 
   const handleRestore = async (app) => {
     setIsProcessing(true);
@@ -40,7 +56,9 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
         return;
       }
 
-      setFeedbackMsg(`Aplikasi "${app.app_name || app.id}" berhasil dipulihkan ke daftar aktif.`);
+      setFeedbackMsg(
+        `Aplikasi "${app.app_name || app.id}" berhasil dipulihkan ke daftar aplikasi aktif.`
+      );
       setIsProcessing(false);
       router.refresh();
     } catch (err) {
@@ -81,107 +99,111 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
     }
   };
 
+  const getStatusBadgeClass = (status) => {
+    const s = (status || "").toLowerCase();
+    if (s.includes("aktif") || s.includes("available")) return styles.badgeActive;
+    if (s.includes("pilot")) return styles.badgePilot;
+    if (s.includes("request")) return styles.badgeRequest;
+    if (s.includes("retiring")) return styles.badgeRetiring;
+    return styles.badgeDefault;
+  };
+
   return (
     <>
       <div className={styles.pageTop}>
         <div className={styles.titleArea}>
-          <h1>Tempat Sampah (Trash)</h1>
-          <p>
+          <h1 className={styles.pageTitle}>Tempat Sampah (Trash)</h1>
+          <p className={styles.pageSubtitle}>
             Daftar aplikasi yang terkena soft delete. Anda dapat memulihkannya atau menghapus permanen dari database.
           </p>
         </div>
         <Link href="/admin" className={styles.btnSecondary}>
-          &larr; Kembali ke Aplikasi Aktif
+          <span aria-hidden="true">&larr;</span> Kembali ke Aplikasi Aktif
         </Link>
       </div>
 
       {feedbackMsg ? (
-        <div
-          style={{
-            padding: "12px 16px",
-            background: "var(--color-status-available-bg)",
-            color: "var(--color-status-available-text)",
-            borderRadius: "var(--radius-sm)",
-            marginBottom: "20px",
-            fontSize: "14px",
-            fontWeight: "500",
-          }}
-        >
-          {feedbackMsg}
+        <div className={styles.feedbackAlert} role="status">
+          <span>&#10003;</span>
+          <span>{feedbackMsg}</span>
         </div>
       ) : null}
 
       <div className={styles.tableCard}>
         <div className={styles.tableToolbar}>
-          <input
-            type="text"
-            placeholder="Cari aplikasi terhapus..."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className={styles.searchInput}
-          />
+          <div className={styles.searchBox}>
+            <input
+              type="text"
+              placeholder="Cari aplikasi terhapus..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
           <span className={styles.countInfo}>
             {filteredApps.length} aplikasi di tempat sampah
           </span>
         </div>
 
-        <div className={styles.tableWrapper}>
+        {/* Desktop Table View */}
+        <div className={styles.desktopTableWrapper}>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>App ID</th>
-                <th>Nama Aplikasi</th>
-                <th>Status</th>
-                <th>Departemen</th>
-                <th>Waktu Dihapus</th>
-                <th>Aksi</th>
+                <th>APP ID</th>
+                <th>NAMA APLIKASI</th>
+                <th>STATUS</th>
+                <th>DEPARTEMEN</th>
+                <th>WAKTU DIHAPUS</th>
+                <th>AKSI</th>
               </tr>
             </thead>
             <tbody>
               {filteredApps.length === 0 ? (
                 <tr>
                   <td colSpan="6" className={styles.emptyState}>
-                    Tempat sampah kosong. Tidak ada aplikasi yang dihapus sementara.
+                    Tempat sampah kosong. Tidak ada aplikasi yang diarsipkan.
                   </td>
                 </tr>
               ) : (
                 filteredApps.map((app) => (
                   <tr key={app.id}>
                     <td>
-                      <span className={styles.appIdCode}>{app.id}</span>
+                      <span className={styles.appIdCode}>
+                        {app.app_id || app.id}
+                      </span>
                     </td>
-                    <td className={styles.appNameCol}>
-                      {app.app_name || "Tanpa Judul"}
+                    <td className={styles.nameCell}>
+                      <div className={styles.appName}>{app.app_name}</div>
+                      {app.description ? (
+                        <div className={styles.appDesc}>{app.description}</div>
+                      ) : null}
                     </td>
                     <td>
-                      <StatusBadge status={app.status} />
+                      <span className={`${styles.statusBadge} ${getStatusBadgeClass(app.status)}`}>
+                        <span className={styles.badgeDot} aria-hidden="true" />
+                        {app.status || "Arsip"}
+                      </span>
                     </td>
                     <td>{app.department || "-"}</td>
+                    <td className={styles.dateCell}>{formatDate(app.deleted_at)}</td>
                     <td>
-                      {app.deleted_at
-                        ? new Date(app.deleted_at).toLocaleString("id-ID", {
-                            dateStyle: "medium",
-                            timeStyle: "short",
-                          })
-                        : "Baru saja"}
-                    </td>
-                    <td>
-                      <div className={styles.actionsCell}>
+                      <div className={styles.actionsGroup}>
                         <button
                           type="button"
                           onClick={() => handleRestore(app)}
-                          className={styles.btnSuccess}
+                          className={styles.btnRestore}
                           disabled={isProcessing}
                         >
-                          &#x21bb; Pulihkan
+                          <span aria-hidden="true">&#8635;</span> Pulihkan
                         </button>
                         <button
                           type="button"
                           onClick={() => setTargetToHardDelete(app)}
-                          className={styles.btnDanger}
+                          className={styles.btnHardDelete}
                           disabled={isProcessing}
                         >
-                          &#x2715; Hapus Permanen
+                          <span aria-hidden="true">&times;</span> Hapus Permanen
                         </button>
                       </div>
                     </td>
@@ -191,26 +213,83 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
             </tbody>
           </table>
         </div>
+
+        {/* Mobile View Card List */}
+        <div className={styles.mobileCardList}>
+          {filteredApps.length === 0 ? (
+            <div className={styles.emptyState}>
+              Tempat sampah kosong. Tidak ada aplikasi yang diarsipkan.
+            </div>
+          ) : (
+            filteredApps.map((app) => (
+              <article key={app.id} className={styles.mobileCardItem}>
+                <div className={styles.mobileCardHeader}>
+                  <span className={styles.appIdCode}>{app.app_id || app.id}</span>
+                  <span className={`${styles.statusBadge} ${getStatusBadgeClass(app.status)}`}>
+                    <span className={styles.badgeDot} aria-hidden="true" />
+                    {app.status || "Arsip"}
+                  </span>
+                </div>
+
+                <h3 className={styles.mobileCardTitle}>{app.app_name}</h3>
+                <p className={styles.mobileCardDesc}>
+                  {app.description || "Tidak ada deskripsi"}
+                </p>
+
+                <div className={styles.mobileDeptRow}>
+                  <span>{app.department || "DSTI UNDIP"}</span>
+                  {app.owner_unit ? (
+                    <span className={styles.acronymTag}>({app.owner_unit})</span>
+                  ) : null}
+                </div>
+
+                <div className={styles.mobileMetaRow}>
+                  <span className={styles.mobileMetaLabel}>Waktu Dihapus</span>
+                  <span className={styles.mobileMetaText}>
+                    {formatDate(app.deleted_at)}
+                  </span>
+                </div>
+
+                <div className={styles.mobileCardActions}>
+                  <button
+                    type="button"
+                    onClick={() => handleRestore(app)}
+                    className={styles.btnRestore}
+                    disabled={isProcessing}
+                  >
+                    <span aria-hidden="true">&#8635;</span> Pulihkan
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setTargetToHardDelete(app)}
+                    className={styles.btnHardDelete}
+                    disabled={isProcessing}
+                  >
+                    <span aria-hidden="true">&times;</span> Hapus Permanen
+                  </button>
+                </div>
+              </article>
+            ))
+          )}
+        </div>
       </div>
 
-      {/* Danger Modal for Hard Delete */}
+      {/* Confirmation Modal for Hard Delete */}
       {targetToHardDelete ? (
         <div className={styles.modalOverlay} role="dialog" aria-modal="true">
           <div className={styles.modalContent}>
-            <h3 className={`${styles.modalTitle} ${styles.modalDangerTitle}`}>
-              &#9888; Konfirmasi Hapus Permanen (Hard Delete)
-            </h3>
+            <h3 className={styles.modalTitleDanger}>Hapus Permanen?</h3>
             <p className={styles.modalDesc}>
-              PERINGATAN: Anda akan menghapus data aplikasi{" "}
-              <strong>&ldquo;{targetToHardDelete.app_name || targetToHardDelete.id}&rdquo;</strong>{" "}
-              secara permanen dari database NeonDB beserta seluruh modul dan relasi penugasannya.
+              Aplikasi <strong>&ldquo;{targetToHardDelete.app_name || targetToHardDelete.id}&rdquo;</strong> akan dihapus selamanya dari database PostgreSQL.
               <br /><br />
-              <strong>Tindakan ini tidak dapat dibatalkan (irreversible)!</strong> Apakah Anda benar-benar yakin?
+              <strong style={{ color: "var(--color-status-retiring-text)" }}>
+                Peringatan: Tindakan ini bersifat destruktif dan tidak dapat dibatalkan kembali!
+              </strong>
             </p>
             <div className={styles.modalActions}>
               <button
                 type="button"
-                className={styles.btnSecondary}
+                className={styles.btnModalCancel}
                 onClick={() => setTargetToHardDelete(null)}
                 disabled={isProcessing}
               >
@@ -218,12 +297,11 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
               </button>
               <button
                 type="button"
-                className={styles.btnDanger}
-                style={{ background: "#b23b3b", color: "#ffffff", borderColor: "#8c2828" }}
+                className={styles.btnModalHardDanger}
                 onClick={handleHardDelete}
                 disabled={isProcessing}
               >
-                {isProcessing ? "Menghapus..." : "Ya, Hapus Selamanya"}
+                {isProcessing ? "Menghapus..." : "Hapus Selamanya"}
               </button>
             </div>
           </div>

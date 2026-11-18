@@ -138,7 +138,12 @@ export default function DstiCatalogSection({
         </div>
 
         <div className={styles.catalogCount}>
-          <strong>{displayedApps.length}</strong> dari {applications.length} aplikasi
+          <div className={styles.countNumbers}>
+            <strong>{displayedApps.length}</strong> dari {applications.length} aplikasi
+          </div>
+          <div className={styles.countHint}>
+            klik &apos;Detail&apos; untuk melihat pengembang &amp; modul
+          </div>
         </div>
       </div>
 

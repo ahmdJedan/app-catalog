@@ -19,9 +19,20 @@ export default function DstiNavbar() {
           />
         </Link>
 
-        <div className={styles.rightInfo}>
-          <p className={styles.orgTitle}>DSTI Universitas Diponegoro</p>
+        <div className={styles.centerInfo}>
           <p className={styles.siteTitle}>Katalog Aplikasi Internal</p>
+          <p className={styles.orgTitle}>DSTI Universitas Diponegoro</p>
+        </div>
+
+        <div className={styles.rightInfo}>
+          <div className={styles.desktopText}>
+            <p className={styles.orgTitle}>DSTI Universitas Diponegoro</p>
+            <p className={styles.siteTitle}>Katalog Aplikasi Internal</p>
+          </div>
+          <div className={styles.pwaBadge}>
+            <span className={styles.pwaDot} aria-hidden="true" />
+            <span>PWA Portal &middot; v2.0</span>
+          </div>
         </div>
       </div>
     </header>
