@@ -83,6 +83,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="username"
+                name="username"
                 type="text"
                 required
                 autoFocus
@@ -101,6 +102,7 @@ export default function LoginPage() {
               </label>
               <input
                 id="password"
+                name="password"
                 type="password"
                 required
                 autoComplete="current-password"
