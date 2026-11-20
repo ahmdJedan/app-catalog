@@ -4,7 +4,7 @@ export default function Navbar() {
   return (
     <header className="site-header">
       <div className="container nav-container">
-        <Link href="/" className="nav-brand">
+        <Link href="/" className="nav-brand" title="Katalog Aplikasi Internal">
           <div className="logo-group">
             <img
               src="/images/undip-logo.png"
