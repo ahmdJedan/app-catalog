@@ -15,22 +15,25 @@ export default function ApplicationCard({ application, index }) {
   } = application;
 
   // Determine badge styling based on status string
-  const normStatus = (status || "").toLowerCase();
+  const normStatus = (status || "").toLowerCase().trim();
+  const cleanStatus = normStatus.replace(/[\s\-_]+/g, "");
   let badgeClass = styles.badgeDefault;
   if (
-    normStatus.includes("tidak aktif") ||
-    normStatus.includes("nonaktif") ||
-    normStatus.includes("non-aktif") ||
-    normStatus.includes("inactive")
+    cleanStatus.includes("tidakaktif") ||
+    cleanStatus.includes("nonaktif") ||
+    cleanStatus.includes("inactive") ||
+    cleanStatus.includes("disabled") ||
+    cleanStatus.includes("arsip") ||
+    cleanStatus.includes("archived")
   ) {
     badgeClass = styles.badgeInactive;
-  } else if (normStatus.includes("aktif") || normStatus.includes("available")) {
+  } else if (cleanStatus.includes("aktif") || cleanStatus.includes("available")) {
     badgeClass = styles.badgeActive;
-  } else if (normStatus.includes("pilot")) {
+  } else if (cleanStatus.includes("pilot")) {
     badgeClass = styles.badgePilot;
-  } else if (normStatus.includes("request")) {
+  } else if (cleanStatus.includes("request")) {
     badgeClass = styles.badgeRequest;
-  } else if (normStatus.includes("retiring")) {
+  } else if (cleanStatus.includes("retiring")) {
     badgeClass = styles.badgeRetiring;
   }
 

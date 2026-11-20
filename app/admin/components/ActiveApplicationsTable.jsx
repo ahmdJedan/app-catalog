@@ -23,12 +23,14 @@ export default function ActiveApplicationsTable({
   const totalApps = applications.length;
   const activeAppsCount = useMemo(() => {
     return applications.filter((app) => {
-      const s = (app.status || "").toLowerCase();
+      const s = (app.status || "").toLowerCase().replace(/[\s\-_]+/g, "");
       if (
-        s.includes("tidak aktif") ||
+        s.includes("tidakaktif") ||
         s.includes("nonaktif") ||
-        s.includes("non-aktif") ||
-        s.includes("inactive")
+        s.includes("inactive") ||
+        s.includes("disabled") ||
+        s.includes("arsip") ||
+        s.includes("archived")
       ) {
         return false;
       }
@@ -111,12 +113,14 @@ export default function ActiveApplicationsTable({
   };
 
   const getStatusBadgeClass = (status) => {
-    const s = (status || "").toLowerCase();
+    const s = (status || "").toLowerCase().replace(/[\s\-_]+/g, "");
     if (
-      s.includes("tidak aktif") ||
+      s.includes("tidakaktif") ||
       s.includes("nonaktif") ||
-      s.includes("non-aktif") ||
-      s.includes("inactive")
+      s.includes("inactive") ||
+      s.includes("disabled") ||
+      s.includes("arsip") ||
+      s.includes("archived")
     ) {
       return styles.badgeInactive;
     }
