@@ -22,7 +22,21 @@ export default function CatalogView({
         const matchesDept = app.department?.toLowerCase().includes(q);
         const matchesOwner = app.owner_unit?.toLowerCase().includes(q);
         const matchesPo = app.po_number?.toLowerCase().includes(q);
-        if (!matchesName && !matchesDesc && !matchesDept && !matchesOwner && !matchesPo) {
+        const matchesDev = app.assigned_employees?.some((dev) =>
+          dev.name?.toLowerCase().includes(q)
+        );
+        const matchesMod = app.modules?.some((mod) =>
+          (typeof mod === "string" ? mod : mod?.name)?.toLowerCase().includes(q)
+        );
+        if (
+          !matchesName &&
+          !matchesDesc &&
+          !matchesDept &&
+          !matchesOwner &&
+          !matchesPo &&
+          !matchesDev &&
+          !matchesMod
+        ) {
           return false;
         }
       }

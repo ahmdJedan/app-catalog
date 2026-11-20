@@ -1573,20 +1573,35 @@ textarea {
 .module-tags-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
+  padding-top: 6px;
 }
 
 .module-pill {
+  position: relative;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background-color: #f1f5f9;
-  border: 1px solid var(--border-subtle);
-  padding: 6px 12px;
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  padding: 6px 14px;
   border-radius: var(--radius-pill);
-  font-size: 0.8rem;
+  font-size: 0.825rem;
   font-weight: 500;
   color: var(--text-main);
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.module-pill:hover,
+.module-pill:focus-visible,
+.module-pill.active {
+  background-color: #eff6ff;
+  border-color: #93c5fd;
+  color: #1e40af;
+  outline: none;
+  box-shadow: 0 2px 8px -2px rgba(37, 99, 235, 0.15);
 }
 
 .mod-dot {
@@ -1594,6 +1609,81 @@ textarea {
   height: 6px;
   border-radius: 50%;
   background-color: var(--primary-blue);
+  flex-shrink: 0;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.module-pill:hover .mod-dot,
+.module-pill.active .mod-dot {
+  transform: scale(1.25);
+  background-color: #2563eb;
+}
+
+.mod-name {
+  line-height: 1.25;
+}
+
+/* Floating tooltip */
+.module-tooltip {
+  position: absolute;
+  bottom: calc(100% + 9px);
+  left: 50%;
+  transform: translateX(-50%) translateY(4px);
+  background: #0f172a;
+  color: #ffffff;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  line-height: 1.35;
+  white-space: nowrap;
+  max-width: min(85vw, 320px);
+  pointer-events: none;
+  opacity: 0;
+  visibility: hidden;
+  box-shadow: 0 10px 25px -3px rgba(15, 23, 42, 0.35), 0 4px 6px -2px rgba(15, 23, 42, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 100;
+  transition: opacity 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              visibility 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Caret indicator pointing down */
+.module-tooltip .tooltip-caret {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 6px solid #0f172a;
+}
+
+.module-tooltip .tooltip-label {
+  color: #94a3b8;
+  font-weight: 500;
+  font-size: 0.725rem;
+  letter-spacing: 0.02em;
+}
+
+.module-tooltip .tooltip-name {
+  color: #38bdf8;
+  font-weight: 600;
+  font-size: 0.75rem;
+}
+
+/* Trigger tooltip on hover, focus, and mobile active */
+.module-pill:hover .module-tooltip,
+.module-pill:focus-visible .module-tooltip,
+.module-pill.active .module-tooltip {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
 }
 
 .empty-hint {

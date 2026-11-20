@@ -2,6 +2,7 @@ import { getApplicationById } from "@/lib/applications";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import StatusBadge from "@/components/StatusBadge";
+import ModuleTag from "@/components/ModuleTag";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
@@ -131,10 +132,7 @@ export default async function ApplicationDetailPage({ params }) {
               {app.modules && app.modules.length > 0 ? (
                 <div className="module-tags-grid">
                   {app.modules.map((m, idx) => (
-                    <div key={idx} className="module-pill">
-                      <span className="mod-dot"></span>
-                      <span>{m}</span>
-                    </div>
+                    <ModuleTag key={idx} moduleItem={m} />
                   ))}
                 </div>
               ) : (

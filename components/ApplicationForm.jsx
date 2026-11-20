@@ -22,18 +22,24 @@ export default function ApplicationForm({
   const [poName, setPoName] = useState(initialData.product_owner?.name || "");
   const [poPosition, setPoPosition] = useState(initialData.product_owner?.position || "");
 
+  const parsedInitialModules = Array.isArray(initialData.modules)
+    ? initialData.modules.map((m) => (typeof m === "string" ? m : m?.name || ""))
+    : [];
+
   const [developers, setDevelopers] = useState(
     initialData.assigned_employees && initialData.assigned_employees.length > 0
       ? initialData.assigned_employees.map((e) => ({
           name: e.name || "",
           role: e.role || "Programmer",
-          modules: Array.isArray(e.modules) ? e.modules : (initialData.modules || []),
+          modules: Array.isArray(e.modules)
+            ? e.modules.map((m) => (typeof m === "string" ? m : m?.name || ""))
+            : parsedInitialModules,
         }))
       : [
           {
             name: "",
             role: "Programmer",
-            modules: initialData.modules && initialData.modules.length > 0 ? initialData.modules : [""],
+            modules: parsedInitialModules.length > 0 ? parsedInitialModules : [""],
           },
         ]
   );
