@@ -24,8 +24,9 @@
   --badge-active-dot: #2563eb;
 
   --badge-danger-bg: #fef2f2;
-  --badge-danger-text: #b91c1c;
+  --badge-danger-text: #dc2626;
   --badge-danger-border: #fecaca;
+  --badge-danger-dot: #ef4444;
 
   --btn-danger-bg: #fee2e2;
   --btn-danger-text: #b91c1c;
@@ -129,6 +130,7 @@ textarea {
 .badge-soft-danger {
   display: inline-flex;
   align-items: center;
+  gap: 6px;
   background-color: var(--badge-danger-bg);
   color: var(--badge-danger-text);
   border: 1px solid var(--badge-danger-border);
@@ -136,6 +138,16 @@ textarea {
   border-radius: var(--radius-pill);
   font-size: 0.75rem;
   font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.badge-soft-danger::before {
+  content: "";
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--badge-danger-dot);
 }
 
 .badge-admin {

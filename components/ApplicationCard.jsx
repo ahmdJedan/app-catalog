@@ -1,4 +1,5 @@
 import Link from "next/link";
+import StatusBadge from "./StatusBadge";
 
 export default function ApplicationCard({ application, index }) {
   const {
@@ -19,7 +20,7 @@ export default function ApplicationCard({ application, index }) {
     <article className="app-card">
       <div className="card-header">
         <span className="app-code">{codeLabel}</span>
-        <span className="badge-active">{status || "Aktif"}</span>
+        <StatusBadge status={status} />
       </div>
 
       <h3 className="app-name">{app_name || "Aplikasi"}</h3>

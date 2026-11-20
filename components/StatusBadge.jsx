@@ -1,9 +1,19 @@
 export default function StatusBadge({ status = "Aktif" }) {
-  const isAktif = status === "Aktif" || status === "Available";
+  const normStatus = (status || "").toLowerCase().trim();
+  const cleanStatus = normStatus.replace(/[\s\-_]+/g, "");
 
-  if (isAktif) {
-    return <span className="badge-active">Aktif</span>;
+  const isInactive =
+    cleanStatus.includes("tidakaktif") ||
+    cleanStatus.includes("nonaktif") ||
+    cleanStatus.includes("inactive") ||
+    cleanStatus.includes("disabled") ||
+    cleanStatus.includes("retiring") ||
+    cleanStatus.includes("arsip") ||
+    cleanStatus.includes("archived");
+
+  if (isInactive) {
+    return <span className="badge-soft-danger">{status || "Tidak Aktif"}</span>;
   }
 
-  return <span className="badge-soft-danger">{status}</span>;
+  return <span className="badge-active">{status || "Aktif"}</span>;
 }
