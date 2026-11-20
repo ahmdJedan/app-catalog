@@ -38,6 +38,14 @@ export default async function LandingPage() {
   const totalDepts = departments.length;
   const activeApps = applications.filter((app) => {
     const s = (app.status || "").toLowerCase();
+    if (
+      s.includes("tidak aktif") ||
+      s.includes("nonaktif") ||
+      s.includes("non-aktif") ||
+      s.includes("inactive")
+    ) {
+      return false;
+    }
     return s.includes("aktif") || s.includes("available");
   }).length;
 

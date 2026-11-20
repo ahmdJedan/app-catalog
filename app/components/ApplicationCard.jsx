@@ -17,7 +17,14 @@ export default function ApplicationCard({ application, index }) {
   // Determine badge styling based on status string
   const normStatus = (status || "").toLowerCase();
   let badgeClass = styles.badgeDefault;
-  if (normStatus.includes("aktif") || normStatus.includes("available")) {
+  if (
+    normStatus.includes("tidak aktif") ||
+    normStatus.includes("nonaktif") ||
+    normStatus.includes("non-aktif") ||
+    normStatus.includes("inactive")
+  ) {
+    badgeClass = styles.badgeInactive;
+  } else if (normStatus.includes("aktif") || normStatus.includes("available")) {
     badgeClass = styles.badgeActive;
   } else if (normStatus.includes("pilot")) {
     badgeClass = styles.badgePilot;

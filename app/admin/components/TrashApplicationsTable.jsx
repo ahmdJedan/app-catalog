@@ -101,6 +101,14 @@ export default function TrashApplicationsTable({ archivedApplications = [] }) {
 
   const getStatusBadgeClass = (status) => {
     const s = (status || "").toLowerCase();
+    if (
+      s.includes("tidak aktif") ||
+      s.includes("nonaktif") ||
+      s.includes("non-aktif") ||
+      s.includes("inactive")
+    ) {
+      return styles.badgeInactive;
+    }
     if (s.includes("aktif") || s.includes("available")) return styles.badgeActive;
     if (s.includes("pilot")) return styles.badgePilot;
     if (s.includes("request")) return styles.badgeRequest;

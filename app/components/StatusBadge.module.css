@@ -14,6 +14,11 @@
   color: var(--color-status-available-text);
 }
 
+.inactive {
+  background: var(--color-status-inactive-bg);
+  color: var(--color-status-inactive-text);
+}
+
 .request {
   background: var(--color-status-request-bg);
   color: var(--color-status-request-text);

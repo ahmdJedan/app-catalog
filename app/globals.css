@@ -18,6 +18,8 @@
 
   --color-status-available-bg: #eff6ff;
   --color-status-available-text: #1d4ed8;
+  --color-status-inactive-bg: #fee2e2;
+  --color-status-inactive-text: #dc2626;
   --color-status-request-bg: #fdf3e2;
   --color-status-request-text: #9a6a12;
   --color-status-retiring-bg: #fbe9e9;

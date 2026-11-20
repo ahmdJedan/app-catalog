@@ -2,6 +2,11 @@ import styles from "./StatusBadge.module.css";
 
 const STATUS_KEY = {
   available: "available",
+  aktif: "available",
+  "tidak aktif": "inactive",
+  nonaktif: "inactive",
+  "non-aktif": "inactive",
+  inactive: "inactive",
   "request access": "request",
   retiring: "retiring",
   pilot: "pilot",

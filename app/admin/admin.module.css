@@ -512,6 +512,15 @@
   background: #1d4ed8;
 }
 
+.badgeInactive {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+}
+.badgeInactive .badgeDot {
+  background: #dc2626;
+}
+
 .badgePilot {
   background: #eaeefa;
   border: 1px solid #c7d2fe;
