@@ -2,52 +2,58 @@ import {
   getAllApplications,
   getDistinctDepartments,
   getDistinctStatuses,
+  getApplicationStats,
 } from "@/lib/applications";
-import CatalogView from "./components/CatalogView";
-import styles from "./catalog.module.css";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import HeroSection from "@/components/HeroSection";
+import CatalogView from "@/components/CatalogView";
 
 export const dynamic = "force-dynamic";
 
-export default async function CatalogPage() {
+export default async function HomePage() {
   let applications = [];
   let departmentOptions = [];
   let statusOptions = [];
-  let loadError = null;
+  let stats = {};
+  let errorMsg = null;
 
   try {
-    [applications, departmentOptions, statusOptions] = await Promise.all([
+    [applications, departmentOptions, statusOptions, stats] = await Promise.all([
       getAllApplications(),
       getDistinctDepartments(),
       getDistinctStatuses(),
+      getApplicationStats(),
     ]);
-  } catch (error) {
-    console.error("[CatalogPage]", error);
-    loadError = "Unable to load applications.";
+  } catch (err) {
+    console.error("[HomePage Error]", err);
+    errorMsg = "Gagal memuat katalog dari database.";
   }
 
   return (
-    <main className={styles.page}>
-      <header className={styles.header}>
-        <h1 className={styles.title}>Application Catalog</h1>
-        <p className={styles.subtitle}>
-          Browse internal applications by name, status, or department.
-        </p>
-      </header>
+    <div className="page-wrapper">
+      <Navbar />
 
-      {loadError ? (
-        <div className={styles.errorState}>
-          <p className={styles.errorTitle}>{loadError}</p>
-          <p className={styles.errorHint}>
-            Check the database connection and try again.
-          </p>
+      <main className="main-content">
+        <HeroSection stats={stats} />
+
+        <div className="container">
+          {errorMsg ? (
+            <div className="alert-error" style={{ textAlign: "center", margin: "24px 0" }}>
+              <p><strong>Error:</strong> {errorMsg}</p>
+              <p>Silakan periksa koneksi database dan segarkan halaman.</p>
+            </div>
+          ) : (
+            <CatalogView
+              applications={applications}
+              departmentOptions={departmentOptions}
+              statusOptions={statusOptions}
+            />
+          )}
         </div>
-      ) : (
-        <CatalogView
-          applications={applications}
-          departmentOptions={departmentOptions}
-          statusOptions={statusOptions}
-        />
-      )}
-    </main>
+      </main>
+
+      <Footer />
+    </div>
   );
 }

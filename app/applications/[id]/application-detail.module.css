@@ -6,8 +6,8 @@
 
 .layout {
   display: grid;
-  grid-template-columns: minmax(280px, 34%) 1fr;
-  gap: 24px;
+  grid-template-columns: minmax(260px, 33%) 1fr;
+  gap: 20px;
   align-items: start;
 }
 
@@ -18,11 +18,10 @@
 }
 
 .leftPanel {
-  padding: 24px 22px;
+  padding: 20px;
   background: var(--color-surface);
   border: 1px solid var(--color-border);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-card);
 }
 
 .rightPanel {
@@ -30,140 +29,48 @@
 }
 
 .appHeader {
-  padding-bottom: 20px;
+  padding-bottom: 18px;
   border-bottom: 1px solid var(--color-border);
-  margin-bottom: 20px;
+  margin-bottom: 4px;
 }
 
 .appName {
-  font-size: 24px;
-  font-weight: 700;
+  font-size: 20px;
   color: var(--color-text-primary);
-  line-height: 1.25;
 }
 
-.description {
-  margin-top: 8px;
-  font-size: 14px;
-  line-height: 1.5;
+.appMeta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 6px;
+  font-size: 13px;
   color: var(--color-text-secondary);
+}
+
+.appId {
+  font-family: var(--font-mono);
+}
+
+.metaDivider {
+  color: var(--color-text-muted);
 }
 
 .badges {
+  margin-top: 10px;
+}
+
+.description {
   margin-top: 12px;
-  margin-bottom: 18px;
-}
-
-.poAndDepartment {
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-}
-
-.poNumber {
-  font-size: 13px;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  letter-spacing: 0.02em;
-}
-
-.departmentText {
-  font-size: 14px;
-  line-height: 1.45;
-  color: var(--color-text-secondary);
-}
-
-.productOwnerSection {
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--color-border);
-  margin-bottom: 22px;
-}
-
-.sectionHeading {
-  font-size: 12.5px;
-  font-weight: 600;
-  letter-spacing: 0.03em;
-  color: var(--color-text-muted);
-  margin-bottom: 8px;
-}
-
-.productOwnerValue {
-  font-size: 18px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  line-height: 1.3;
-}
-
-.programmersSection {
-  padding-top: 2px;
-}
-
-.programmerGroupsList {
-  display: flex;
-  flex-direction: column;
-  gap: 26px;
-}
-
-.programmerGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.programmerItem {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.programmerName {
-  font-size: 15.5px;
-  font-weight: 700;
-  color: var(--color-text-primary);
-  line-height: 1.3;
-}
-
-.programmerRole {
-  font-size: 13px;
-  color: var(--color-text-secondary);
-}
-
-.modulesBlock {
-  margin-top: 2px;
-  padding-left: 12px;
-}
-
-.modulesHeading {
-  display: block;
-  font-size: 12.5px;
-  font-weight: 600;
-  color: #64748b;
-  margin-bottom: 8px;
-}
-
-.modulesBulletList {
-  list-style-type: disc;
-  padding-left: 18px;
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.moduleBulletItem {
   font-size: 13.5px;
+  line-height: 1.55;
   color: var(--color-text-secondary);
-  line-height: 1.45;
 }
 
-.moduleBulletItem::marker {
-  color: var(--color-accent);
-}
-
-.placeholder {
-  font-size: 13.5px;
+.ownerUnit {
+  margin-top: 10px;
+  font-size: 13px;
   color: var(--color-text-muted);
-  font-style: italic;
 }
 
 .stateBox {
